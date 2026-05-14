@@ -1,0 +1,37 @@
+# Maven
+target/
+*.jar
+*.war
+*.rar
+*.class
+*.classpath
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Spring Boot
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+
+# Node (if frontend included)
+node_modules/
+npm-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
