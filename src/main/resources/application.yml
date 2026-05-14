@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: delivery-management-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/delivery_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Use 'create' for first run, then 'validate' for production
+    properties:
+      hibernate:
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          fetch_size: 50
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+        generate_statistics: false
+    show-sql: false
+    open-in-view: false
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=10m
+    cache-names:
+      - distance_matrix
+      - eta_calculations
+      - traffic_zones
+
+  websocket:
+    stomp:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.delivery: DEBUG
+    org.hibernate.spatial: DEBUG
+    org.springframework.data: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/delivery-management.log
+    max-size: 10MB
+    max-history: 30
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    min-response-size: 1024
